@@ -15,15 +15,44 @@
 	</parent>
 	<groupId>com.mavengurus</groupId>
 	<artifactId>springboot-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${revision}</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
+		<revision>0.0.1</revision>
 	</properties>
 
+<!-- removed cz we added a nexus group that includes these 2 repositories and configured the mirror in settings.xml
+	<repositories>
+		<repository>
+			<id>local-nexus-snapshot</id>
+			<url>http://localhost:8081/repository/local-nexus-snapshot/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>local-nexus-release</id>
+			<url>http://localhost:8081/repository/local-nexus-release/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	-->
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>local-nexus-snapshot</id>
+			<url>http://localhost:8081/repository/local-nexus-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<id>local-nexus-release</id>
+			<url>http://localhost:8081/repository/local-nexus-release/</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -54,6 +83,33 @@
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<!--<version>1.2.2</version>-->
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+				<executions>
+					<!-- enable flattening -->
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<!-- ensure proper cleanup -->
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
