@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<packaging>pom</packaging>
-	<modules>
-		<module>web-app</module>
-		<module>web-model</module>
-	</modules>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.mavengurus</groupId>
-	<artifactId>springboot-demo</artifactId>
-	<version>${revision}</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>web-app</module>
+        <module>web-model</module>
+    </modules>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.2.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.mavengurus</groupId>
+    <artifactId>springboot-demo</artifactId>
+    <version>${revision}</version>
+    <name>demo</name>
+    <description>Demo project for Spring Boot</description>
 
-	<properties>
-		<java.version>11</java.version>
-		<revision>0.0.1</revision>
-	</properties>
+    <properties>
+        <java.version>11</java.version>
+        <revision>0.0.1</revision>
+    </properties>
 
-<!-- removed cz we added a nexus group that includes these 2 repositories and configured the mirror in settings.xml
-	<repositories>
-		<repository>
-			<id>local-nexus-snapshot</id>
-			<url>http://localhost:8081/repository/local-nexus-snapshot/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>local-nexus-release</id>
-			<url>http://localhost:8081/repository/local-nexus-release/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	-->
+    <profiles>
+        <profile>
+            <id>nexus-profile</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>local-nexus-snapshot</id>
+                    <url>http://localhost:8081/repository/local-nexus-snapshot/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>local-nexus-release</id>
+                    <url>http://localhost:8081/repository/local-nexus-release/</url>
+                </repository>
+            </distributionManagement>
+            <repositories>
+                <repository>
+                    <id>local-nexus-snapshot</id>
+                    <url>http://localhost:8081/repository/local-nexus-snapshot/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>local-nexus-release</id>
+                    <url>http://localhost:8081/repository/local-nexus-release/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>local-nexus-snapshot</id>
-			<url>http://localhost:8081/repository/local-nexus-snapshot/</url>
-		</snapshotRepository>
-		<repository>
-			<id>local-nexus-release</id>
-			<url>http://localhost:8081/repository/local-nexus-release/</url>
-		</repository>
-	</distributionManagement>
+    <!-- <distributionManagement>
+        <snapshotRepository>
+            <id>local-nexus-snapshot</id>
+            <url>http://localhost:8081/repository/local-nexus-snapshot/</url>
+        </snapshotRepository>
+        <repository>
+            <id>local-nexus-release</id>
+            <url>http://localhost:8081/repository/local-nexus-release/</url>
+        </repository>
+    </distributionManagement> -->
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>build-info-goal</id>
-						<goals>
-							<goal>build-info</goal>
-						</goals>
-					</execution>
-					<!--  <execution>
-                          <id>pre-it</id>
-                          <goals>
-                              <goal>start</goal>
-                          </goals>
-                      </execution>
-                      <execution>
-                          <id>post-it</id>
-                          <goals>
-                              <goal>stop</goal>
-                          </goals>
-                      </execution>-->
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-			</plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-info-goal</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<!--<version>1.2.2</version>-->
-				<configuration>
-					<flattenMode>bom</flattenMode>
-				</configuration>
-				<executions>
-					<!-- enable flattening -->
-					<execution>
-						<id>flatten</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>flatten</goal>
-						</goals>
-					</execution>
-					<!-- ensure proper cleanup -->
-					<execution>
-						<id>flatten.clean</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <flattenMode>bom</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- enable flattening -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
