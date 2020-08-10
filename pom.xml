@@ -21,8 +21,13 @@
 
     <properties>
         <java.version>11</java.version>
-        <revision>0.0.1</revision>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <project.scm.id>github</project.scm.id>
     </properties>
+    <scm>
+        <developerConnection>scm:git:https://github.com/ASKRIGhassen/springboot-demo.git</developerConnection>
+        <url>https://github.com/ASKRIGhassen/springboot-demo</url>
+    </scm>
 
     <profiles>
         <profile>
@@ -53,6 +58,9 @@
                     </snapshots>
                 </repository>
             </repositories>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 
@@ -110,6 +118,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-release-plugin</artifactId>
+                  <version>2.5.3</version>
             </plugin>
         </plugins>
     </build>
